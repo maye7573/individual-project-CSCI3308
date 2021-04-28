@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu') %>
+
+<%- include('../partials/filter') %>
+
+<%
+  if (data) {
+	var cards = ''
+    cards += "<table class='table table-bordered'>";
+        cards += "<thead>";
+            cards += "<tr>";
+            cards += "<th scope='col'>Artist Name</th>"
+            cards += "<th scope='col'> Review</th>"
+            cards += "<th scope='col'> Review Date</th>"
+            cards += "</tr>" ;
+            cards += "</thead>" ;
+
+  data.forEach(item => { 
+
+
+    cards += "<tbody>";
+    cards += "<tr>";
+    cards += "<td>"+item.tv_show+"</td>";
+    cards += "<td>"+item.review+"</td>";
+    cards += "<td>"+item.review_date+"</td>";
+    cards += "</tr>";
+    cards += "</tbody>";
+
+  
+	
+  });
+  cards += "</table>";
+%>
+
+    <%- cards %>
+<% } %>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu') %>
+
+
+
+<%
+  if (items) {
+	var cards = ''
+  cards += "<div class='container-fluid'>";
+
+
+
+  
+  items.forEach(item => { 
+    %>    
+
+   <%-include('../partials/modal', {artist:item.strArtist})%>
+<%
+    cards += "<div class='container'>";
+    cards += "<div class='container-body'>";
+    cards += "<iframe class='responsive-iframe' src="+item.strArtistBanner+"></iframe> ";
+    cards += "<h4 class='container-title'>"+item.strArtist+ "</h4>";
+    cards += "<a href= "+item.strWebsite+" class='btn btn-primary'> Artist Website</a>";
+    cards += "<a href= '#myModal' class='btn btn-primary' data-toggle='modal' onclick='openModal()'>Add Review</a>";
+	  cards += " <br> ";
+	  cards += "<b class='container-text'>Formation Year:</b>";
+    cards += "<p class='container-text'>"+item.intFormedYear+"</p>";
+    cards += "<b class='container-text'>Genres:</b>";
+    cards += "<p class='container-text'>"+item.strGenre+"</p>";
+    cards += "<b class='container-text'>Bio:</b>";
+    cards += "<p class='container-text'>"+item.strBiographyEN+"</p>";
+    cards += "</div>";
+	  cards += "</div>";
+
+  });
+  cards += "</div>"
+%>
+
+    <%- cards %>
+<% } %>
+
+<%- include('../partials/footer') %>
