@@ -29,9 +29,9 @@ var pgp = require('pg-promise')();
 const dbConfig = {
 	host: 'localhost',
 	port: 5432,
-	database: 'postgres',
-	user: 'ManojYeddanapudy',
-	password: 'In+ercom'
+	database: process.env.POSTGRES_DB,
+	user: process.env.POSTGRES_USER,
+	password: process.env.POSTGRES_PASSWORD
 };
 
 const isProduction = process.env.NODE_ENV === 'production';
