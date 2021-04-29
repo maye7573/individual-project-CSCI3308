@@ -29,12 +29,19 @@ var pgp = require('pg-promise')();
 const dbConfig = {
 	host: 'localhost',
 	port: 5432,
-	database: 'postgres',
-	user: 'ManojYeddanapudy',
-	password: 'In+ercom'
+	database: process.env.POSTGRES_DB,
+	user: process.env.POSTGRES_USER,
+	password: process.env.POSTGRES_PASSWORD
 };
+const isProduction = process.env.NODE_ENV === 'production';
+const dbConfig = isProduction ? process.env.DATABASE_URL : dev_dbConfig;
 
-var db = pgp(dbConfig);
+// fixes: https://github.com/vitaly-t/pg-promise/issues/711
+if (isProduction) {
+	pgp.pg.defaults.ssl = {rejectUnauthorized: false};
+}
+
+let db = pgp(dbConfig);
 const axios = require('axios');
 //const qs = require('query-string');
 // set the view engine to ejs
@@ -233,5 +240,8 @@ app.get("/", (req, res) => {
 
 
 
-app.listen(3000);
-console.log('3000 is the magic port');
+//app.listen(3000);
+//console.log('3000 is the magic port');
+const server = app.listen(process.env.PORT || 3000, () => {
+	console.log(`Express running → PORT ${server.address().port}`);
+  });
