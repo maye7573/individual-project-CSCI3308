@@ -33,16 +33,16 @@ const dbConfig = {
 	user: process.env.POSTGRES_USER,
 	password: process.env.POSTGRES_PASSWORD
 };
-
 const isProduction = process.env.NODE_ENV === 'production';
-const dbConfig = isProduction ? process.env.DATABASE_URL : dev_dbConfig;
-
-// fixes: https://github.com/vitaly-t/pg-promise/issues/711
+const dbConfig;
 if (isProduction) {
-	pgp.pg.defaults.ssl = {rejectUnauthorized: false};
+  dbConfig = process.env.DATABASE_URL;
+  pgp.pg.defaults.ssl = {rejectUnauthorized: false};
+} else {
+ dbConfig = dev_dbConfig;
 }
 
-let db = pgp(dbConfig);
+var db = pgp(dbConfig);
 const axios = require('axios');
 //const qs = require('query-string');
 // set the view engine to ejs
